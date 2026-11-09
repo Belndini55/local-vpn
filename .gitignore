@@ -1,0 +1,12 @@
+# Wygenerowane konfiguracje i klucze WireGuard — nie commitujemy ich do gita
+config/
+*.conf
+!wg0.conf.example
+keys/
+peer*.conf
+
+# IDE / system
+.vscode/
+.idea/
+*.swp
+.DS_Store

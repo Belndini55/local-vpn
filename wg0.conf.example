@@ -1,0 +1,16 @@
+# Przykładowa konfiguracja serwera WireGuard (/config/wg0.conf)
+# Plik ten jest tylko wzorem — prawdziwa wg0.conf generuje się automatycznie
+# przy pierwszym uruchomieniu kontenera w katalogu ./config.
+
+[Interface]
+Address = 10.13.13.1/24
+SaveConfig = true
+ListenPort = 51820
+PrivateKey = <wygenerowane automatycznie przez kontener>
+# PostUp / PostDown: NAT i ip_forward są obsługiwane przez skrypt
+# scripts/setup-host-nat.sh na hoście (nie wewnątrz kontenera).
+
+[Peer]
+# Przykładowy klient peer1
+PublicKey = <klucz-publiczny-klienta>
+AllowedIPs = 10.13.13.2/32

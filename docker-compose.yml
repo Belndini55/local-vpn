@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  wireguard:
+    image: lscr.io/linuxserver/wireguard:latest
+    container_name: wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+      # Zewnętrzny adres serwera widziany przez klientów (IP lub domena).
+      # Możesz zostawić "auto" — kontener spróbuje sam wykryć adres.
+      - SERVERURL=auto
+      - SERVERPORT=51820
+      # Ile konfiguracji peerów ma zostać wygenerowanych automatycznie przy starcie.
+      - PEERS=3
+      - PEERDNS=1.1.1.1
+      - INTERNAL_SUBNET=10.13.13.0/24
+    volumes:
+      - ./config:/config
+    ports:
+      - "51820:51820/udp"
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+    restart: unless-stopped
+
+    # Opcjonalnie: ogranicz zasoby, jeśli serwer jest słaby (np. Raspberry Pi).
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "0.5"
+    #       memory: 256M
